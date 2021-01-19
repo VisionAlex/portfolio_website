@@ -1,0 +1,50 @@
+{% extends 'account/base_auth.html' %}
+
+{% load account %}
+{% block title %}Log In{% endblock title %}
+{% block content %}
+    <form action="{% url 'account_login' %}" method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="alert alert-danger">{{error}}</p>
+            {% endfor %}
+    {% endif %}
+        <h1 class="h3 mb-3 fw-normal">Log In</h1>
+        <div class="form-floating mb-2">
+            <input type="email" name="login" id="inputEmail" class="form-control {% if form.login.errors%}is-invalid{% endif %}" placeholder="Email address" required autofocus>
+            <label for="inputEmail">Email address</label>
+            {% if form.login.errors%}
+            <div class="invalid-feedback">
+                {% for error in form.login.errors %}
+                    {{error}}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+        
+        </div>
+        <div class="form-floating">
+            <input type="password" name="password" id="inputPassword" class="form-control {% if form.password.errors %}is-invalid{% endif %}" placeholder="Password" required>
+            <label for="inputPassword" >Password</label>
+            {% if form.password.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                    {{error}}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="w-100 btn btn-lg btn-dark bg-gradient primaryAction" type="submit">Log in</button>
+        <div class="mt-1">
+        <a class="links button secondaryAction mt-5" href="{% url 'account_reset_password' %}">Forgot Password?</a>
+        </div>
+        <div class="mt-2">
+        Don't have an account? <a class='links ms-1' href="{{ signup_url }}">Sign Up</a>
+        </div>
+        <p class="mt-5 mb-3 text-muted">Simple Portfolio Tracker &copy; 2021</p>
+    </form>
+{% endblock content %}

@@ -38,11 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django.contrib.sites',
+    
+    # Local
     'users.apps.UsersConfig',
     'stocks.apps.StocksConfig',
 
-
+    # Third-Party
+    'allauth',
+    'allauth.account',
     'django_celery_beat',
     'django_celery_results',
 ]
@@ -62,7 +66,7 @@ ROOT_URLCONF = 'portfolio_website.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,9 +134,27 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # celery configuration
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND","django-db")
+
+# allauth config
+SITE_ID = 1
+LOGIN_REDIRECT_URL = 'home'
+ACCOUNT_LOGOUT_REDIRECT = 'home'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_USERNAME_REQUIRED = False

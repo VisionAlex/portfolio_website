@@ -1,0 +1,47 @@
+{% extends 'account/base_auth.html' %}
+
+{% load account %}
+{% block title %}Sign Up{% endblock title %}
+{% block content %}
+<form action="{% url 'account_signup' %}" method="post">
+{% csrf_token %}
+{% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="alert alert-danger">{{error}}</p>
+            {% endfor %}
+{% endif %}
+
+<h1 class="h3 mb-3 fw-normal">Sign Up</h1>
+        <div class="form-floating mb-2">
+            <input type="email" name="email" id="inputEmail" class="form-control {% if form.email.errors %}is-invalid{% endif %}" placeholder="Email address" required autofocus>
+            <label for="inputEmail">Email address</label>
+            {% if form.email.errors%}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                    {{error}}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="form-floating">
+            <input type="password" name="password1" id="inputPassword" class="form-control {% if form.password1.errors %}is-invalid{% endif %}" placeholder="Password" required>
+            <label for="inputPassword" >Password</label>
+            {% if form.password1.errors %}
+            <div class="invalid-feedback mb-1">
+                {% for error in form.password1.errors %}
+                    <p class="m-0 p-0">{{error}}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="w-100 btn btn-lg btn-dark bg-gradient primaryAction" type="submit">Sign Up</button>
+        <div class="mt-2">
+        Already have an account? <a class='links ms-1' href="{{ login_url }}">Log In</a>
+        </div>
+        <p class="mt-5 mb-3 text-muted">Simple Portfolio Tracker &copy; 2021</p>
+</form>
+
+{% endblock content %}
