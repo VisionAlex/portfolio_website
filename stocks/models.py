@@ -17,7 +17,7 @@ class Exchange(models.Model):
     mic = models.CharField("mic code", max_length=5, unique=True, primary_key=True)
     code = models.CharField(max_length=3)
     name = models.CharField(max_length=254)
-
+    
     def __str__(self):
         return self.name
     
