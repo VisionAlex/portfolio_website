@@ -1,0 +1,104 @@
+{% extends '_base.html' %}
+
+{% load humanize %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block content %}
+<main class="content">
+    <div class="container-fluid p-0">
+        <div class="row mb-2 mb-xl-3">
+        <div class="col-auto d-none d-sm-block">
+            <h3><strong>Analytics</strong> Dashboard</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6 col-xxl-5 d-flex">
+            <div class="w-100">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Stocks</h5>
+                                <h1 class="mt-1 mb-3">&euro;{{total}}</h1>
+                                <div class="mb-1">
+                                    <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
+                                    <span class="text-muted">Since last week</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Visitors</h5>
+                                <h1 class="mt-1 mb-3">14.212</h1>
+                                <div class="mb-1">
+                                    <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
+                                    <span class="text-muted">Since last week</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Earnings</h5>
+                                <h1 class="mt-1 mb-3">$21.300</h1>
+                                <div class="mb-1">
+                                    <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>
+                                    <span class="text-muted">Since last week</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Orders</h5>
+                                <h1 class="mt-1 mb-3">64</h1>
+                                <div class="mb-1">
+                                    <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
+                                    <span class="text-muted">Since last week</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="accordion" id="accordionParent">
+{% for portfolio in portfolios %}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading{{portfolio.id}}">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{portfolio.id}}" aria-expanded="false" aria-controls="collapse{{portfolio.id}}">
+        {{portfolio.name}} - Cash balance: {{portfolio.cash_balance | floatformat:0 | intcomma }} {{portfolio.currency}}
+      </button>
+    </h2>
+    <div id="collapse{{portfolio.id}}" class="accordion-collapse collapse" aria-labelledby="heading{{portfolio.id}}" data-bs-parent="#accordionParent">
+      <div class="accordion-body table-responsive">
+        <table class="table table-hover table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Units</th>
+                    <th>Cost Base</th>
+                    <th>Price</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            {% for position in portfolio.positions.all %}
+                <tr>
+                    <td>{{position.stock.symbol }}</td>
+                    <td>{{position.units | intcomma }}</td>
+                    <td>{{position.cost_base | floatformat:2 | intcomma }}</td>
+                    <td>{{position.display_price | floatformat:2 | intcomma }} {{position.stock.currency}}</td>
+                    <td>&euro;{{position.display_market_value | floatformat:0 | intcomma }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+</main>
+{% endblock content %}

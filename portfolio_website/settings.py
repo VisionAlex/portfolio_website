@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
     
     # Local
     'users.apps.UsersConfig',
@@ -144,7 +145,7 @@ CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND","django-db")
 
 # allauth config
 SITE_ID = 1
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'dashboard'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -158,3 +159,9 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_PRESERVE_USERNAME_CASING = False
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_USERNAME_REQUIRED = False
+
+
+
+
+
+USE_THOUSAND_SEPARATOR = True

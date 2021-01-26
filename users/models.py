@@ -5,6 +5,7 @@ CURRENCIES = (
     ('EUR', 'EUR'),
     ('GBP', 'GBP'),
     ('USD', 'USD'),
+    ('RON', 'RON'),
 )
 
 class CustomUser(AbstractUser):

@@ -14,6 +14,7 @@ services:
       - DEBUG=1
       - CELERY_BROKER=redis://redis:6379
       - CELERY_BACKEND=django-db
+      - FINNHUB=bvuu7hv48v6r5v92scr0
     depends_on:
       - pgdb
       - redis

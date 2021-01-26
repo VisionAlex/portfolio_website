@@ -5,3 +5,10 @@ redis
 django-celery-beat
 django-celery-results
 django-allauth
+BeautifulSoup4
+lxml
+pandas
+numpy
+xlrd
+finnhub-python
+yfinance
